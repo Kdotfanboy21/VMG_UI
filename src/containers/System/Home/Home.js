@@ -13,6 +13,8 @@ import './Home.scss';
 import { pathPublic } from '../../../utils';
 import axios from 'axios';
 
+
+const baseURL = process.env.REACT_APP_BACKEND_URL;
 const Home = () => {
     const navigate = useNavigate();
     const [pinPosition, setPinPosition] = useState(0);
@@ -99,7 +101,7 @@ const Home = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:8081/home/cate');
+                const response = await axios.get(`${baseURL}home/cate`);
                 setType(
                     (response.data.data).map(item => ({
                         value: item.categoryId,
@@ -232,7 +234,7 @@ const Home = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:8081/home/building-list?page=0`);
+                const response = await axios.get(`${baseURL}home/building-list?page=0`);
                 setBuildings(response && response.data && response.data.data && response.data.data.content ? response.data.data.content : []);
             } catch (err) {
                 setError(err.message);
@@ -248,7 +250,7 @@ const Home = () => {
         const fetchData = async () => {
             try {
                 setLoadingNews(true);
-                const response = await axios.get(`http://localhost:8081/home/news`);
+                const response = await axios.get(`${baseURL}home/news`);
                 setArrNews(response && response.data && response.data.data && response.data.data.content ? response.data.data.content : []);
             } catch (err) {
                 setError(err.message);

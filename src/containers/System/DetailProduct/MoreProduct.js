@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { pathPublic } from "../../../utils";
 
 
+const baseURL = process.env.REACT_APP_BACKEND_URL;
 
 const MoreProduct = () => {
     const [buildings, setBuildings] = useState([]);
@@ -14,7 +15,7 @@ const MoreProduct = () => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get(`http://localhost:8081/home/building-list`);
+                const response = await axios.get(`${baseURL}home/building-list`);
                 setBuildings(response && response.data && response.data.data && response.data.data.content ? response.data.data.content : []);
             } catch (err) {
                 setError(err.message);

@@ -12,6 +12,7 @@ import { pathPublic } from '../../../utils';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+const baseURL = process.env.REACT_APP_BACKEND_URL;
 const Product = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -76,7 +77,7 @@ const Product = () => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get(`http://localhost:8081/home/building-list`);
+                const response = await axios.get(`${baseURL}home/building-list`);
                 setBuildings(response && response.data && response.data.data && response.data.data.content ? response.data.data.content : []);
                 setTotalPages(response.data.data.totalPages);
             } catch (err) {
@@ -114,7 +115,7 @@ const Product = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:8081/home/cate');
+                const response = await axios.get(`${baseURL}home/cate`);
                 setType(
                     (response.data.data).map(item => ({
                         value: item.categoryId,
@@ -142,9 +143,9 @@ const Product = () => {
                 let response = null;
                 const isObjectEmpty = (obj) => Object.keys(obj).length === 0;
                 if (isObjectEmpty(search)) {
-                    response = await axios.get(`http://localhost:8081/home/building-list?page=${value.selected}`);
+                    response = await axios.get(`${baseURL}home/building-list?page=${value.selected}`);
                 } else {
-                    response = await axios.post(`http://localhost:8081/home/search?page=${value.selected}`, search);
+                    response = await axios.post(`${baseURL}home/search?page=${value.selected}`, search);
                 }
                 setBuildings(response && response.data && response.data.data && response.data.data.content ? response.data.data.content : []);
                 setTotalPages(response.data.data.totalPages);
@@ -315,7 +316,7 @@ const Product = () => {
         setCurrentPage(0);
         try {
             setLoading(true);
-            const response = await axios.post(`http://localhost:8081/home/search`, search);
+            const response = await axios.post(`${baseURL}home/search`, search);
             setBuildings(response.data.data.content);
             setTotalPages(response.data.data.totalPages);
         } catch (err) {

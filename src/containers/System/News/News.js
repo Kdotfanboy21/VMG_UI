@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { pathPublic } from '../../../utils';
 import axios from 'axios';
 
+const baseURL = process.env.REACT_APP_BACKEND_URL;
 const News = () => {
     const [totalPages, setTotalPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
@@ -47,7 +48,7 @@ const News = () => {
         const fetchData = async () => {
             try {
                 setLoadingNews(true);
-                const response = await axios.get(`http://localhost:8081/home/news`);
+                const response = await axios.get(`${baseURL}home/news`);
                 setArrNews(response && response.data && response.data.data && response.data.data.content ? response.data.data.content : []);
                 setTotalPages(response.data.data.totalPages);
             } catch (err) {
@@ -68,7 +69,7 @@ const News = () => {
         const fetchData = async () => {
             try {
                 setLoadingNews(true);
-                const response = await axios.get(`http://localhost:8081/home/news?page=${value.selected}`);
+                const response = await axios.get(`${baseURL}home/news?page=${value.selected}`);
                 setArrNews(response && response.data && response.data.data && response.data.data.content ? response.data.data.content : []);
                 setTotalPages(response.data.data.totalPages);
             } catch (err) {

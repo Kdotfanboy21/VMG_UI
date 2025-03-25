@@ -9,6 +9,8 @@ import ScrollToHash from "../ScrollToHash";
 import store from '../../../redux';
 import { useSelector } from "react-redux";
 
+const baseURL = process.env.REACT_APP_BACKEND_URL;
+
 function DetailProduct() {
     const location = useLocation();
     const isLogin = useSelector(state => state.user.isLoggedIn);
@@ -38,7 +40,7 @@ function DetailProduct() {
             try {
                 if (buildingId) {
                     setLoading(true);
-                    const response = await axios.get(`http://localhost:8081/home/building/${buildingId}`);
+                    const response = await axios.get(`${baseURL}home/building/${buildingId}`);
                     setBuildings(response && response.data && response.data.data ? response.data.data : null);
                 }
             } catch (err) {
@@ -83,7 +85,7 @@ function DetailProduct() {
                 buildingId,
                 note
             }
-            const response = await axios.post('http://localhost:8081/customer',
+            const response = await axios.post(`${baseURL}customer`,
                 data,
                 {
                     headers: {

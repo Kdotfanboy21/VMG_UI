@@ -11,6 +11,8 @@ import { pathPublic } from '../../../utils';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+const baseURL = process.env.REACT_APP_BACKEND_URL;
+
 const Favourite = () => {
     const dispatch = useDispatch();
     const favourites = useSelector(state => state.user.favourites);
@@ -72,7 +74,7 @@ const Favourite = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:8081/home/cate');
+                const response = await axios.get(`${baseURL}home/cate`);
                 setType(
                     (response.data.data).map(item => ({
                         value: item.categoryId,

@@ -5,6 +5,9 @@ import axios from "axios";
 import { pathPublic } from "../../../utils";
 import ScrollToHash from "../ScrollToHash";
 
+
+const baseURL = process.env.REACT_APP_BACKEND_URL;
+
 const DetailNews = () => {
     const location = useLocation();
     const [newsId, setNewsId] = useState('');
@@ -24,7 +27,7 @@ const DetailNews = () => {
             try {
                 if (newsId) {
                     setLoading(true);
-                    const response = await axios.get(`http://localhost:8081/home/news/${newsId}`);
+                    const response = await axios.get(`${baseURL}home/news/${newsId}`);
                     setNews(response && response.data && response.data.data ? response.data.data : null);
                 }
             } catch (err) {
@@ -91,7 +94,7 @@ const DetailNews = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:8081/home/news?page=0`);
+                const response = await axios.get(`${baseURL}home/news?page=0`);
                 setArrNews(response && response.data && response.data.data && response.data.data.content ? response.data.data.content : []);
             } catch (err) {
                 setError(err.message);

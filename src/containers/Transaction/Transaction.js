@@ -5,6 +5,7 @@ import './Transaction.scss';
 import { Link } from "react-router-dom";
 import { pathPublic } from "../../utils";
 
+const baseURL = process.env.REACT_APP_BACKEND_URL;
 const Transaction = (props) => {
     const [transaction, setTransaction] = useState([]);
     const [arrProduct, setArrProduct] = useState([]);
@@ -20,7 +21,7 @@ const Transaction = (props) => {
                 : store.getState().user.jwtToken;
 
             try {
-                const response = await axios.get('http://localhost:8081/customer/transaction-list',
+                const response = await axios.get(`${baseURL}customer/transaction-list`,
                     {
                         headers: {
                             'Authorization': jwtToken,
@@ -40,7 +41,7 @@ const Transaction = (props) => {
         const fetchData = async () => {
             for (const item of transaction) {
                 try {
-                    const response = await axios.get(`http://localhost:8081/home/building/${item.buildingId}`);
+                    const response = await axios.get(`${baseURL}home/building/${item.buildingId}`);
                     setArrProduct((prevItems) => {
                         // Sử dụng Set để loại bỏ các phần tử trùng lặp
                         const updatedItems = new Set(prevItems);
